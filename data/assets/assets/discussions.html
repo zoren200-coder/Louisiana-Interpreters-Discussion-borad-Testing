@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Discussions — Hub Testing</title>
+
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/site.css">
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/library.css">
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/community.css">
+
+  <style>
+    .testing-banner {
+      padding: 16px;
+      background: #fff3cd;
+      color: #142f48;
+      text-align: center;
+    }
+
+    .testing-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-block: 20px;
+    }
+
+    .discussion-page {
+      padding-bottom: 40px;
+    }
+
+    .discussion-page [hidden] {
+      display: none !important;
+    }
+
+    .discussion-page form {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .discussion-page form label {
+      font-weight: 600;
+    }
+
+    .discussion-page input,
+    .discussion-page textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font: inherit;
+    }
+
+    .discussion-page button {
+      justify-self: start;
+      min-height: 44px;
+    }
+
+    .discussion-page button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .discussion-post {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 24px;
+      overflow-wrap: anywhere;
+    }
+
+    .discussion-post h2 {
+      margin-top: 0;
+    }
+
+    .discussion-text {
+      white-space: pre-wrap;
+    }
+
+    .discussion-byline {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .discussion-reply {
+      margin-top: 20px;
+      padding: 16px;
+      border-left: 3px solid var(--gold);
+      background: #f5f7f9;
+    }
+
+    .discussion-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .discussion-empty {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .discussion-empty h2 {
+      margin: 0 0 20px;
+    }
+
+    .discussion-empty button {
+      min-height: 48px;
+    }
+
+    #discussion-compose {
+      scroll-margin-top: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .discussion-post {
+        padding: 18px;
+      }
+
+      .discussion-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .discussion-page form button,
+      .discussion-empty button {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script defer src="data/supabase-config.js"></script>
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/member-return.js"></script>
+  <script defer src="assets/discussions.js"></script>
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="testing-banner">
+    <strong>Discussion board testing</strong>
+    — this is separate from the live Hub.
+  </div>
+
+  <nav class="wrap testing-navigation" aria-label="Testing navigation">
+    <a href="discussions.html" aria-current="page">Discussions</a>
+    <a href="membership.html">Membership</a>
+  </nav>
+
+  <main id="main" class="wrap library-page discussion-page">
+    <h1>Louisiana Interpreters Hub — Discussions</h1>
+
+    <p>
+      Read community conversations. Sign in with your
+      test membership account to start discussions and reply.
+    </p>
+
+    <p id="discussion-auth" role="status" aria-live="polite">
+      Checking membership…
+    </p>
+
+    <p>
+      <a id="discussion-signin"
+        class="button"
+        href="membership.html">
+        Sign in or register to participate
+      </a>
+
+      <button id="discussion-signout"
+        class="button"
+        type="button"
+        hidden>
+        Sign out
+      </button>
+    </p>
+
+    <p id="discussion-status" role="status" aria-live="polite">
+      Loading discussions…
+    </p>
+
+    <button id="discussion-refresh"
+      class="button"
+      type="button">
+      Refresh discussions
+    </button>
+
+    <section id="discussion-empty"
+      class="discussion-empty"
+      aria-labelledby="discussion-empty-title"
+      hidden>
+      <h2 id="discussion-empty-title">No discussions yet</h2>
+
+      <button id="discussion-start"
+        class="button gold"
+        type="button">
+        Start a Discussion
+      </button>
+    </section>
+
+    <section id="discussion-compose"
+      class="directory-request"
+      hidden>
+      <h2>Start a discussion</h2>
+
+      <form id="discussion-form">
+        <label for="discussion-title">Title</label>
+        <input id="discussion-title"
+          maxlength="200"
+          required>
+
+        <label for="discussion-body">
+          Your question or experience
+        </label>
+        <textarea id="discussion-body"
+          rows="5"
+          maxlength="12000"
+          required></textarea>
+
+        <button class="button" type="submit">
+          Post discussion
+        </button>
+      </form>
+    </section>
+
+    <div id="discussion-list"></div>
+
+    <noscript>
+      Enable JavaScript to use discussions.
+    </noscript>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>
+        © <span id="year">2026</span>
+        Louisiana Interpreters Hub — Testing
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
