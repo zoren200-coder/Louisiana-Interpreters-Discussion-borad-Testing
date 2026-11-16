@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hub Membership — Testing</title>
+
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/site.css">
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/library.css">
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/community.css">
+  <link rel="stylesheet"
+    href="https://zoren200-coder.github.io/LA-Interpreter-Hub-Website/assets/membership.css">
+
+  <style>
+    .membership-page [hidden] {
+      display: none !important;
+    }
+
+    .membership-grid.signup-mode {
+      grid-template-columns: 1fr;
+      max-width: 620px;
+      margin-inline: auto;
+    }
+
+    #member-signup-panel {
+      scroll-margin-top: 24px;
+    }
+
+    .testing-banner {
+      padding: 16px;
+      background: #fff3cd;
+      color: #142f48;
+      text-align: center;
+    }
+
+    .testing-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-block: 20px;
+    }
+  </style>
+
+  <script defer src="data/supabase-config.js"></script>
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/member-return.js"></script>
+  <script defer src="assets/membership.js"></script>
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="testing-banner">
+    <strong>Discussion board testing</strong>
+    — accounts here are separate from the live Hub.
+  </div>
+
+  <nav class="wrap testing-navigation" aria-label="Testing navigation">
+    <a href="discussions.html">Discussions</a>
+    <a href="membership.html" aria-current="page">Membership</a>
+  </nav>
+
+  <main id="main" class="wrap library-page membership-page">
+    <h1>Hub Membership</h1>
+
+    <p>
+      Create a free account to become a member of the
+      Interpreter Hub of Louisiana. Verify your email
+      to complete registration.
+    </p>
+
+    <p>
+      This is the testing website. Register a new test account
+      using an email address you can access.
+    </p>
+
+    <p id="member-status" role="status" aria-live="polite">
+      Loading membership service…
+    </p>
+
+    <section id="member-account" class="directory-request" hidden>
+      <h2>Welcome to the Hub</h2>
+      <p id="member-identity"></p>
+      <p>Your test membership is active.</p>
+      <p><a href="discussions.html?join=1">Join the discussion</a></p>
+      <button id="member-signout" class="button" type="button">
+        Sign out
+      </button>
+    </section>
+
+    <div id="member-forms" class="membership-grid" hidden>
+      <section id="member-signup-panel" class="directory-request">
+        <h2>Become a member</h2>
+
+        <form id="member-signup">
+          <label for="signup-name">Professional name</label>
+          <input id="signup-name"
+            autocomplete="name"
+            maxlength="150"
+            required>
+
+          <label for="signup-email">Email</label>
+          <input id="signup-email"
+            type="email"
+            autocomplete="email"
+            required>
+
+          <label for="signup-password">
+            Password — at least 12 characters
+          </label>
+          <input id="signup-password"
+            type="password"
+            autocomplete="new-password"
+            minlength="12"
+            required>
+
+          <label class="consent-label">
+            <input id="signup-consent" type="checkbox" required>
+            <span>
+              I want to register as a Hub member.
+              My account information will be stored using
+              Supabase for membership access and will not
+              be listed publicly.
+            </span>
+          </label>
+
+          <button class="button" type="submit">
+            Register as a member
+          </button>
+        </form>
+
+        <p id="member-signin-link" hidden>
+          Already a member?
+          <a href="membership.html">Sign in</a>
+        </p>
+      </section>
+
+      <section id="member-login-panel" class="directory-request">
+        <h2>Member sign-in</h2>
+
+        <form id="member-login">
+          <label for="login-email">Email</label>
+          <input id="login-email"
+            type="email"
+            autocomplete="email"
+            required>
+
+          <label for="login-password">Password</label>
+          <input id="login-password"
+            type="password"
+            autocomplete="current-password"
+            required>
+
+          <button class="button" type="submit">Sign in</button>
+        </form>
+
+        <h3>Forgot your password?</h3>
+
+        <form id="member-reset">
+          <label for="reset-email">Account email</label>
+          <input id="reset-email"
+            type="email"
+            autocomplete="email"
+            required>
+
+          <button class="button" type="submit">
+            Send password reset email
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <section id="member-recovery" class="directory-request" hidden>
+      <h2>Choose a new password</h2>
+
+      <form id="member-password">
+        <label for="new-password">
+          New password — at least 12 characters
+        </label>
+        <input id="new-password"
+          type="password"
+          autocomplete="new-password"
+          minlength="12"
+          required>
+
+        <button class="button" type="submit">
+          Save new password
+        </button>
+      </form>
+    </section>
+
+    <noscript>
+      Enable JavaScript to register or sign in.
+    </noscript>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>
+        © <span id="year">2026</span>
+        Louisiana Interpreters Hub — Testing
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
